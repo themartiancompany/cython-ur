@@ -4,7 +4,7 @@
 pkgname=('cython' 'cython2')
 pkgbase=cython
 pkgver=0.17
-pkgrel=1
+pkgrel=2
 pkgdesc="C-Extensions for Python "
 arch=(i686 x86_64)
 url="http://www.cython.org"
@@ -22,6 +22,8 @@ package_cython() {
 
   cd $srcdir/Cython-$pkgver
   python setup.py install --root=$pkgdir
+
+  sed -i 's|#!.*python|#!/usr/bin/python3|' $pkgdir/usr/bin/*
 }
 
 package_cython2() {
