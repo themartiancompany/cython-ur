@@ -3,7 +3,7 @@
 
 pkgname=('cython' 'cython2')
 pkgbase=cython
-pkgver=0.17.2
+pkgver=0.17.3
 pkgrel=1
 pkgdesc="C-Extensions for Python "
 arch=(i686 x86_64)
@@ -11,7 +11,7 @@ url="http://www.cython.org"
 license=('APACHE')
 makedepends=('python-distribute' 'python2-distribute')
 source=("http://cython.org/release/Cython-$pkgver.tar.gz")
-md5sums=('09dfd4f5f82046f85025a391f084d8f9')
+md5sums=('683241fee8f51a08acd42ab1deea0857')
 
 build() {
   true
