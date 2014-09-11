@@ -4,7 +4,7 @@
 pkgname=('cython' 'cython2')
 pkgbase=cython
 pkgver=0.21
-pkgrel=1
+pkgrel=2
 pkgdesc="C-Extensions for Python "
 arch=(i686 x86_64)
 url="http://www.cython.org"
@@ -30,4 +30,5 @@ package_cython2() {
 
   mv $pkgdir/usr/bin/cygdb $pkgdir/usr/bin/cygdb2
   mv $pkgdir/usr/bin/cython $pkgdir/usr/bin/cython2
+  mv $pkgdir/usr/bin/cythonize $pkgdir/usr/bin/cythonize2
 }
