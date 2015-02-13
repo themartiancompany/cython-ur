@@ -3,7 +3,7 @@
 
 pkgname=('cython' 'cython2')
 pkgbase=cython
-pkgver=0.21.2
+pkgver=0.22
 pkgrel=1
 pkgdesc="C-Extensions for Python "
 arch=(i686 x86_64)
@@ -11,7 +11,7 @@ url="http://www.cython.org"
 license=('APACHE')
 makedepends=('python-setuptools' 'python2-setuptools')
 source=("http://cython.org/release/Cython-$pkgver.tar.gz")
-md5sums=('d21adb870c75680dc857cd05d41046a4')
+md5sums=('1ae25add4ef7b63ee9b4af697300d6b6')
 
 package_cython() {
   depends=('python' 'python-setuptools')
