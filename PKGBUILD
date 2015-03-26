@@ -4,7 +4,7 @@
 pkgname=('cython' 'cython2')
 pkgbase=cython
 pkgver=0.22
-pkgrel=1
+pkgrel=2
 pkgdesc="C-Extensions for Python "
 arch=(i686 x86_64)
 url="http://www.cython.org"
