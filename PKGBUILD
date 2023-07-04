@@ -3,25 +3,25 @@
 # Contributor: Igor Scabini <furester @ gmail.com>
 
 pkgname=cython
-pkgver=0.29.35
-pkgrel=2
+pkgver=0.29.36
+pkgrel=1
 pkgdesc='C-Extensions for Python'
 arch=(x86_64)
 url='https://cython.org'
 license=(APACHE)
 depends=(python)
-makedepends=(python-setuptools)
+makedepends=(python-build python-installer python-setuptools python-wheel)
 source=(https://github.com/cython/cython/archive/$pkgver/$pkgname-$pkgver.tar.gz)
-sha256sums=('a2da56cc22be823acf49741b9aa3aa116d4f07fa8e8b35a3cb08b8447b37c607')
+sha256sums=('bd8ee4208e1f2817914894eca8c4ca894f6c9a51803b0b815a9a3c03d01ab729')
 
 build() {
   cd cython-$pkgver
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd cython-$pkgver
-  python setup.py install --root="$pkgdir" --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 
   for f in cygdb cython cythonize; do
     mv "$pkgdir"/usr/bin/$f "$pkgdir"/usr/bin/${f}3
