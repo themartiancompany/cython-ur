@@ -3,21 +3,32 @@
 # Contributor: Igor Scabini <furester @ gmail.com>
 
 pkgname=cython
-pkgver=0.29.36
+pkgver=3.0.0
 pkgrel=1
 pkgdesc='C-Extensions for Python'
 arch=(x86_64)
 url='https://cython.org'
 license=(APACHE)
 depends=(python)
+replaces=(cython-dev)
 makedepends=(python-build python-installer python-setuptools python-wheel)
+checkdepends=(python-pytest gdb python-numpy)
 source=(https://github.com/cython/cython/archive/$pkgver/$pkgname-$pkgver.tar.gz)
-sha256sums=('bd8ee4208e1f2817914894eca8c4ca894f6c9a51803b0b815a9a3c03d01ab729')
+sha256sums=('1acaf0abe3edfad06cc98b4ab2499b20714a6fe11c4ef1afb4751f2a8e9208af')
 
 build() {
   cd cython-$pkgver
   python -m build --wheel --no-isolation
 }
+
+#check() {
+#  cd cython-$pkgver
+#  python -m venv --system-site-packages test-env
+#  test-env/bin/python -m installer dist/*.whl
+#  test-env/bin/python -m pytest -v --ignore docs \
+#                                   --ignore pyximport/test/test_reload.py \
+#                                   --ignore Cython/Debugger/Tests
+#}
 
 package() {
   cd cython-$pkgver
