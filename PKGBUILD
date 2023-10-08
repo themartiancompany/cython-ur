@@ -4,7 +4,7 @@
 
 pkgname=cython
 pkgver=3.0.3
-pkgrel=1
+pkgrel=2
 pkgdesc='C-Extensions for Python'
 arch=(x86_64)
 url='https://cython.org'
@@ -19,8 +19,14 @@ makedepends=(python-build
 checkdepends=(gdb
               python-numpy
               python-pytest)
-source=(https://github.com/cython/cython/archive/$pkgver/$pkgname-$pkgver.tar.gz)
-sha256sums=('0c2eae8a4ceab7955be1e11a4ddc5dcc3aa06ce22ad594262f1555b9d10667f0')
+source=(https://github.com/cython/cython/archive/$pkgver/$pkgname-$pkgver.tar.gz
+        https://github.com/cython/cython/commit/26edfbc0.patch)
+sha256sums=('0c2eae8a4ceab7955be1e11a4ddc5dcc3aa06ce22ad594262f1555b9d10667f0'
+            'abccff1743c3c79864026b17f19d90b524e6c787647b22b397d197d0b5581446')
+
+prepare() {
+  patch -d $pkgname-$pkgver -p1 < 26edfbc0.patch # Fix compilation regressions
+}
 
 build() {
   cd cython-$pkgver
