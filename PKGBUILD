@@ -8,7 +8,7 @@ pkgrel=1
 pkgdesc='C-Extensions for Python'
 arch=(x86_64)
 url='https://cython.org'
-license=(APACHE)
+license=(Apache-2.0)
 depends=(glibc
          python)
 replaces=(cython-dev)
