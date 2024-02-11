@@ -1,0 +1,4 @@
+[cython]
+source = "github"
+github = "cython/cython"
+use_max_tag = true
