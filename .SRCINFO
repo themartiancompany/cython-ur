@@ -1,10 +1,10 @@
 pkgbase = cython
 	pkgdesc = C-Extensions for Python
-	pkgver = 3.0.8
+	pkgver = 3.0.9
 	pkgrel = 1
 	url = https://cython.org
 	arch = x86_64
-	license = APACHE
+	license = Apache-2.0
 	checkdepends = gdb
 	checkdepends = python-numpy
 	checkdepends = python-pytest
@@ -15,7 +15,7 @@ pkgbase = cython
 	depends = glibc
 	depends = python
 	replaces = cython-dev
-	source = https://github.com/cython/cython/archive/3.0.8/cython-3.0.8.tar.gz
-	sha256sums = b20cd126f40d78228c3ba101a7cfc0a3e8519de1bdc2a58f26aec5284c8f0340
+	source = https://github.com/cython/cython/archive/3.0.9/cython-3.0.9.tar.gz
+	sha256sums = ca7758a3a87340a93f5bde4747e4a5ff1708cf2df407dee533b63ef6cc845777
 
 pkgname = cython
