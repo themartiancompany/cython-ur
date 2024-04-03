@@ -1,7 +1,7 @@
 pkgbase = cython
 	pkgdesc = C-Extensions for Python
 	pkgver = 3.0.10
-	pkgrel = 1
+	pkgrel = 2
 	url = https://cython.org
 	arch = x86_64
 	license = Apache-2.0
