@@ -4,7 +4,7 @@
 
 pkgname=cython
 pkgver=3.0.10
-pkgrel=2
+pkgrel=3
 pkgdesc='C-Extensions for Python'
 arch=(x86_64)
 url='https://cython.org'
@@ -12,32 +12,30 @@ license=(Apache-2.0)
 depends=(glibc
          python)
 replaces=(cython-dev)
-makedepends=(python-build
+makedepends=(git
+             python-build
              python-installer
              python-setuptools
              python-wheel)
 checkdepends=(gdb
               python-numpy
-              python-pytest)
-source=(https://github.com/cython/cython/archive/$pkgver/$pkgname-$pkgver.tar.gz)
-sha256sums=('00f97476cef9fcd9a89f9d2a49be3b518e1a74b91f377fe08c97fcb44bc0f7d7')
+              python-pytest
+              python-tests)
+source=(git+https://github.com/cython/cython#tag=$pkgver)
+sha256sums=('e2cfd1ac69cc31cc3762cf2fa8355228f046748cae7e48622b78f57908b38a64')
 
 build() {
-  cd cython-$pkgver
+  cd cython
   python -m build --wheel --no-isolation
 }
 
-#check() {
-#  cd cython-$pkgver
-#  python -m venv --system-site-packages test-env
-#  test-env/bin/python -m installer dist/*.whl
-#  test-env/bin/python -m pytest -v --ignore docs \
-#                                   --ignore pyximport/test/test_reload.py \
-#                                   --ignore Cython/Debugger/Tests
-#}
+check() {
+  cd cython
+  python runtests.py -vv -j 64 --no-pyregr
+}
 
 package() {
-  cd cython-$pkgver
+  cd cython
   python -m installer --destdir="$pkgdir" dist/*.whl
 
   for f in cygdb cython cythonize; do
