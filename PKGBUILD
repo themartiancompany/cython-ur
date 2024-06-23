@@ -4,7 +4,7 @@
 
 pkgname=cython
 pkgver=3.0.10
-pkgrel=4
+pkgrel=5
 pkgdesc='C-Extensions for Python'
 arch=(x86_64)
 url='https://cython.org'
@@ -23,11 +23,6 @@ checkdepends=(gdb
               python-tests)
 source=(git+https://github.com/cython/cython#tag=$pkgver)
 sha256sums=('e2cfd1ac69cc31cc3762cf2fa8355228f046748cae7e48622b78f57908b38a64')
-
-prepare() {
-  cd cython
-  git cherry-pick -n a6cef7429ceffdad7121b3f625b1c4b653219d4f # numpy 2.0 compatibility
-}
 
 build() {
   cd cython
