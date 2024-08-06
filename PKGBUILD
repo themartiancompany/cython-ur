@@ -53,7 +53,7 @@ source=(
   "${_url}/archive/$pkgver/$pkgname-$pkgver.tar.gz"
 )
 sha256sums=(
-  '50e72ac8e32f5cca8242ad319df4cbd1f76545f2b66bc5d7b17ce45d5cbc415e'
+  'e2cfd1ac69cc31cc3762cf2fa8355228f046748cae7e48622b78f57908b38a64'
 )
 
 build() {
@@ -90,41 +90,8 @@ package() {
     -m installer \
     --destdir="${pkgdir}" \
     dist/*.whl
-=======
-arch=(x86_64)
-url='https://cython.org'
-license=(Apache-2.0)
-depends=(glibc
-         python)
-replaces=(cython-dev)
-makedepends=(git
-             python-build
-             python-installer
-             python-setuptools
-             python-wheel)
-checkdepends=(gdb
-              python-numpy
-              python-pytest
-              python-tests)
-source=(git+https://github.com/cython/cython#tag=$pkgver)
-sha256sums=('e2cfd1ac69cc31cc3762cf2fa8355228f046748cae7e48622b78f57908b38a64')
-
-build() {
-  cd cython
-  python -m build --wheel --no-isolation
-}
-
-check() {
-  cd cython
-  python runtests.py -vv -j 64 --no-pyregr
-}
-
-package() {
-  cd cython
-  python -m installer --destdir="$pkgdir" dist/*.whl
->>>>>>> c0cf5ed3ec4c77f1e9506f22a20ae86a7e10cf2d
-
-  for f in cygdb cython cythonize; do
+  for f \
+    in cygdb cython cythonize; do
     mv \
       "${pkgdir}/usr/bin/${f}" \
       "${pkgdir}/usr/bin/${f}3"
