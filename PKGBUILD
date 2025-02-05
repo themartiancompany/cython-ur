@@ -6,27 +6,49 @@
 # Contributor: Pellegrino Prevete <cGVsbGVncmlub3ByZXZldGVAZ21haWwuY29tCg== | base -d>
 # Contributor: Truocolo <truocolo@aol.com>
 
+_os="$( \
+  uname \
+    -o)"
+if [[ "${_os}" == "Android" ]]; then
+  _libc="ndk-sysroot"
+  _pip="true"
+  _build="false"
+elif [[ "${_os}" == "GNU/Linux" ]]; then
+  _libc="glibc"
+  _pip="false"
+  _build="true"
+fi
 _py="python"
+_pyver="$( \
+  "${_py}" \
+    -V | \
+    awk \
+      '{print $2}')"
+_pymajver="${_pyver%.*}"
+_pyminver="${_pymajver#*.}"
+_pynextver="${_pymajver%.*}.$(( \
+  ${_pyminver} + 1))"
 pkgname=cython
 pkgver=3.0.10
 pkgrel=5
 pkgdesc='C-Extensions for Python'
 arch=(
-  x86_64
-  arm
-  i686
-  armv7h
-  pentium4
-  aarch64
-  powerpc
+  'x86_64'
+  'arm'
+  'i686'
+  'armv7h'
+  'pentium4'
+  'aarch64'
+  'powerpc'
 )
 url="https://${pkgname}.org"
 license=(
-  APACHE
+  'APACHE'
 )
 depends=(
-  glibc
-  "${_py}"
+  "${_libc}"
+  "${_py}>=${_pymajver}"
+  "${_py}<${_pynextver}"
 )
 replaces=(
   "${pkgname}-dev"
@@ -38,31 +60,42 @@ conflicts=(
   "${_py}-${pkgname}"
 )
 makedepends=(
-  "${_py}-build"
-  "${_py}-installer"
   "${_py}-setuptools"
   "${_py}-wheel"
 )
+if [[ "${_pip}" == "true" ]]; then
+  makedepends+=(
+    "${_py}-pip"
+  )
+elif [[ "${_build}" == "true" ]]; then
+  makedepends+=(
+    "${_py}-build"
+    "${_py}-installer"
+  )
+fi
 checkdepends=(
-  gdb
+  'gdb'
   "${_py}-numpy"
   "${_py}-pytest"
 )
-_url="https://github.com/${pkgname}/${pkgname}"
+_http="https://github.com"
+_url="${_http}/${pkgname}/${pkgname}"
 source=(
   "${_url}/archive/$pkgver/$pkgname-$pkgver.tar.gz"
 )
 sha256sums=(
-  'e2cfd1ac69cc31cc3762cf2fa8355228f046748cae7e48622b78f57908b38a64'
+  "00f97476cef9fcd9a89f9d2a49be3b518e1a74b91f377fe08c97fcb44bc0f7d7"
 )
 
 build() {
   cd \
     "${pkgname}-${pkgver}"
-  "${_py}" \
-    -m build \
-      --wheel \
-      --no-isolation
+  if [[ "${_build}" == "true" ]]; then
+    "${_py}" \
+      -m build \
+        --wheel \
+        --no-isolation
+  fi
 }
 
 check() {
@@ -86,10 +119,18 @@ check() {
 package() {
   cd \
     "${pkgname}-${pkgver}"
-  "${_py}" \
-    -m installer \
-    --destdir="${pkgdir}" \
-    dist/*.whl
+  if [[ "${_build}" == "true" ]]; then
+    "${_py}" \
+      -m installer \
+      --destdir="${pkgdir}" \
+      "dist/"*".whl"
+  elif [[ "${_pip}" == "false" ]]; then
+    pip \
+      install \
+        "${pkgname}" \
+        -t \
+          "${pkgdir}"
+  fi
   for f \
     in cygdb cython cythonize; do
     mv \
