@@ -124,12 +124,11 @@ package() {
       -m installer \
       --destdir="${pkgdir}" \
       "dist/"*".whl"
-  elif [[ "${_pip}" == "false" ]]; then
+  elif [[ "${_pip}" == "true" ]]; then
     pip \
       install \
         "${pkgname}" \
-        -t \
-          "${pkgdir}"
+        --root="${pkgdir}"
   fi
   for f \
     in cygdb cython cythonize; do
